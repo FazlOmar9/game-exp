@@ -3,9 +3,10 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkel from "./GameCardSkel";
 import GameCardContainer from "./GameCardContainer";
+import { Genre } from "../hooks/useGenres";
 
-const GameGrid = () => {
-  const { data, error, isLoading } = useGames();
+const GameGrid = ({ selectedGenre }: {selectedGenre: Genre | null}) => {
+  const { data, error, isLoading } = useGames(selectedGenre);
   const skeletons = Array(15).fill(0);
 
   return (
@@ -18,13 +19,13 @@ const GameGrid = () => {
       >
         {isLoading &&
           skeletons.map((_, i) => (
-            <GameCardContainer>
-              <GameCardSkel key={i} />
+            <GameCardContainer key={i}>
+              <GameCardSkel />
             </GameCardContainer>
           ))}
         {data.map((game) => (
-          <GameCardContainer>
-            <GameCard key={game.id} game={game} />
+          <GameCardContainer key={game.id}>
+            <GameCard game={game} />
           </GameCardContainer>
         ))}
       </SimpleGrid>
